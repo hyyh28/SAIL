@@ -14,6 +14,7 @@ import torch.autograd as autograd
 from torch.distributions import Normal
 from utils.utils import soft_update, hard_update
 from models.VAE import VAE
+import os
 
 
 class SoftBC_agent(object):
@@ -434,6 +435,8 @@ class SoftBC_agent(object):
     def save_model(self):
         to_device(torch.device('cpu'), self.inverse_model, self.policy_net, self.value_net, self.goal_model)
         print('saving models')
+        if not os.path.exists(assets_dir()+"/learned_models/"):
+            os.makedirs(assets_dir()+"/learned_models/")
         torch.save([self.inverse_model.state_dict(), self.policy_net.state_dict(), self.value_net.state_dict(),
                     self.goal_model.state_dict()], assets_dir()+'/learned_models/{}_{}_models.pt'.format(self.args.env_name, str(self.args.beta)))
         to_device(self.device, self.inverse_model, self.policy_net, self.value_net, self.goal_model)
