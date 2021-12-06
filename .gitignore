@@ -67,3 +67,4 @@ log/
 .pt
 .p
 *expert_traj.p
+/models/all-MiniLM-L6-v2/
